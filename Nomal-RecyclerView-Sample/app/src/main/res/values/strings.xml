@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">RecyclerView</string>
+
+
+    <string name="AnimalDataAdd">추가</string>
+    <string name="AnimalDataDelete">삭제</string>
+
+    <string name="Kind">종류: </string>
+    <string name="Name">이름: </string>
+    <string name="PhoneNum">연락처: </string>
+    <string name="HintName">이름을 입력해주세요.</string>
+    <string name="HintPhoneNum">연락처를 입력해주세요.</string>
+    <string name="Cancel">취소</string>
+    <string name="Add">추가</string>
+</resources>
