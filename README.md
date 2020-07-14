@@ -17,13 +17,13 @@ Android RecyclerView Sample
 - Clicking the PositiveButton deletes it, and clicking the NegativeButton cancels it.
 - ![Alt text](https://github.com/pyg1007/RecyclerView-Sample/blob/master/RecyclerViewLongClick.gif)
 
-## Step1
+## Chapter1 RecyclerView-Sample
 No use Databinding, MVVM
 
-## Step2
-No use MVVM, use DataBinding
+## Chapter2 RecyclerView-Sample
+Use DataBinding, Not use MVVM
 
-## Step3
+## Chapter3 RecyclerView-Sample
 Use Databinding, MVVM
 
 # Development environment
