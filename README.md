@@ -5,6 +5,7 @@ Android RecyclerView Sample
 
 ### Button Click
 - Show dialog, add on positiveButtonClick, cancel on negativeButtonClick
+- Reference LongClick gif
 
 ### RecyclerView Click
 - show Toast Message(RecyclerView Item Information)
