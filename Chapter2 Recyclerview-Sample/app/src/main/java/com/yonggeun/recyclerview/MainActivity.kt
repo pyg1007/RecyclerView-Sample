@@ -23,10 +23,15 @@ class MainActivity : AppCompatActivity(), AnimalAdapter.ItemClickListener {
 
     private lateinit var animalAdapter: AnimalAdapter
     private lateinit var animals: ObservableArrayList<Animal>
+
+    // DataBinding
+    // Rebuild when an error occurs
     private lateinit var mainBinding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Connect DataBinding
         mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         setData()
@@ -48,6 +53,10 @@ class MainActivity : AppCompatActivity(), AnimalAdapter.ItemClickListener {
             this.adapter = animalAdapter
             this.layoutManager = layoutManager
         }
+
+        // RecyclerView Xml
+        // use androidx.databinding.ObservableArrayList
+        // app:item = "@{animalList}"
         mainBinding.animalList = animals
     }
 

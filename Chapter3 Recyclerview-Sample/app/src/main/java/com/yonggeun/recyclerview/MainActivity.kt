@@ -40,12 +40,18 @@ class MainActivity : AppCompatActivity(), AnimalAdapter.ItemClickListener {
         factory = AnimalViewModelFactory(repository)
         viewModel = ViewModelProvider(this, factory).get(AnimalViewModel::class.java)
 
+        // MainActivity xml
+        // variable name is viewModel
+        // right viewModel is AnimalViewModel
         mainBinding.viewModel = viewModel
+
+        // DataBinding lifecycleOwner Enrollment
         mainBinding.lifecycleOwner = this
 
         initRecyclerView()
         addData()
 
+        // value has viewModel
         animalItems = viewModel.animals.value!!
     }
 
@@ -99,6 +105,7 @@ class MainActivity : AppCompatActivity(), AnimalAdapter.ItemClickListener {
                 this.setMessage("${position+1}번째 내용을 삭제하시겠습니까?")
                 this.setCancelable(false)
                 this.setPositiveButton("삭제") { dialog, _ ->
+                    // LiveData setValue
                     viewModel.remove(animalItems[position])
                     dialog.dismiss()
                 }
@@ -115,6 +122,7 @@ class MainActivity : AppCompatActivity(), AnimalAdapter.ItemClickListener {
         val animalDataAddDialog =
             AnimalDataAddDialog(this, object : AnimalDataAddDialog.OnClickListener {
                 override fun positiveButtonClick(view: View, animal: Animal) {
+                    // LiveData setValue
                     viewModel.add(animal)
                 }
 

@@ -11,6 +11,9 @@ import com.yonggeun.recyclerview.data.Animal
 import com.yonggeun.recyclerview.databinding.CatlistdataBinding
 import com.yonggeun.recyclerview.databinding.DoglistdataBinding
 
+// Use LiveData<MutableList<Animal>>
+// RecyclerView Xml app:item
+// value = item
 @BindingAdapter("item")
 fun bindItem(recyclerView: RecyclerView, items: MutableList<Animal>){
     Log.e("TAG: ", "TAG")

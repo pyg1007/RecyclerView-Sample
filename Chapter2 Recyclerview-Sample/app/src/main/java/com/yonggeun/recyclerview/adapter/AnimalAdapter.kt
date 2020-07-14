@@ -11,6 +11,8 @@ import com.yonggeun.recyclerview.data.Animal
 import com.yonggeun.recyclerview.databinding.CatlistdataBinding
 import com.yonggeun.recyclerview.databinding.DoglistdataBinding
 
+// RecyclerView Xml app:item
+// value = item
 @BindingAdapter("item")
 fun bindItem(recyclerView: RecyclerView, item: ObservableArrayList<Animal>){
     val adapter = recyclerView.adapter as AnimalAdapter

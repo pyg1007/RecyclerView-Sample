@@ -1,5 +1,7 @@
 package com.yonggeun.recyclerview.data
 
+
+//Modularity
 class AnimalRepository {
 
     private val animals = mutableListOf<Animal>()
