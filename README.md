@@ -5,11 +5,11 @@ Android RecyclerView Sample
 
 ### Button Click
 - Show dialog, add on positiveButtonClick, cancel on negativeButtonClick
-- ![Alt text](https://github.com/pyg1007/RecyclerView-Sample/blob/master/RecyclerViewClick.gif)
-
 
 ### RecyclerView Click
 - show Toast Message(RecyclerView Item Information)
+- ![Alt text](https://github.com/pyg1007/RecyclerView-Sample/blob/master/RecyclerViewClick.gif)
+
 
 
 ### RecyclerView LongClick
