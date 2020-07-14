@@ -3,6 +3,7 @@ package com.yonggeun.recyclerview
 import android.app.Dialog
 import android.graphics.Point
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
@@ -11,10 +12,14 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.ObservableArrayList
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yonggeun.recyclerview.adapter.AnimalAdapter
 import com.yonggeun.recyclerview.data.Animal
+import com.yonggeun.recyclerview.data.AnimalRepository
+import com.yonggeun.recyclerview.data.AnimalViewModel
+import com.yonggeun.recyclerview.data.AnimalViewModelFactory
 import com.yonggeun.recyclerview.databinding.ActivityMainBinding
 import com.yonggeun.recyclerview.dialog.AnimalDataAddDialog
 import kotlinx.android.synthetic.main.activity_main.*
@@ -22,16 +27,26 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity(), AnimalAdapter.ItemClickListener {
 
     private lateinit var animalAdapter: AnimalAdapter
-    private lateinit var animals: ObservableArrayList<Animal>
+    private var animalItems: MutableList<Animal> = mutableListOf()
     private lateinit var mainBinding: ActivityMainBinding
+    private lateinit var viewModel: AnimalViewModel
+    private lateinit var factory: AnimalViewModelFactory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        setData()
+        val repository = AnimalRepository()
+        factory = AnimalViewModelFactory(repository)
+        viewModel = ViewModelProvider(this, factory).get(AnimalViewModel::class.java)
+
+        mainBinding.viewModel = viewModel
+        mainBinding.lifecycleOwner = this
+
         initRecyclerView()
         addData()
+
+        animalItems = viewModel.animals.value!!
     }
 
     private fun addData() {
@@ -41,30 +56,21 @@ class MainActivity : AppCompatActivity(), AnimalAdapter.ItemClickListener {
     }
 
     private fun initRecyclerView() {
-        animalAdapter = AnimalAdapter(animals, this)
+        animalAdapter = AnimalAdapter(animalItems, this)
         val layoutManager = LinearLayoutManager(this)
+
         mainBinding.AnimalRecyclerView.apply {
             this.setHasFixedSize(true)
             this.adapter = animalAdapter
             this.layoutManager = layoutManager
         }
-        mainBinding.animalList = animals
-    }
 
-    //Sample Data
-    private fun setData() {
-        animals = ObservableArrayList()
-        animals.add(Animal("Cat", "나비", "010-0000-0000"))
-        animals.add(Animal("Cat", "나나", "010-0000-0001"))
-        animals.add(Animal("Cat", "냐옹", "010-0000-0002"))
-        animals.add(Animal("Cat", "별이", "010-0000-0003"))
-        animals.add(Animal("Dog", "봄이", "010-0000-0004"))
     }
 
     override fun onItemClick(view: View, position: Int) { // 클릭이벤트 콜백
         Toast.makeText(
             this@MainActivity,
-            "이름: ${animals[position].name} 연락처: ${animals[position].phoneNumber}",
+            "이름: ${animalItems[position].name} 연락처: ${animalItems[position].phoneNumber}",
             Toast.LENGTH_SHORT
         ).show()
     }
@@ -90,10 +96,10 @@ class MainActivity : AppCompatActivity(), AnimalAdapter.ItemClickListener {
         val dialog: AlertDialog? = this@MainActivity.let {
             val builder: AlertDialog.Builder = AlertDialog.Builder(it)
             builder.apply {
-                this.setMessage("${position}번째 내용을 삭제하시겠습니까?")
+                this.setMessage("${position+1}번째 내용을 삭제하시겠습니까?")
                 this.setCancelable(false)
                 this.setPositiveButton("삭제") { dialog, _ ->
-                    animals.removeAt(position)
+                    viewModel.remove(animalItems[position])
                     dialog.dismiss()
                 }
                 this.setNegativeButton("취소") { dialog, _ ->
@@ -109,7 +115,7 @@ class MainActivity : AppCompatActivity(), AnimalAdapter.ItemClickListener {
         val animalDataAddDialog =
             AnimalDataAddDialog(this, object : AnimalDataAddDialog.OnClickListener {
                 override fun positiveButtonClick(view: View, animal: Animal) {
-                    animals.add(animal)
+                    viewModel.add(animal)
                 }
 
                 override fun negativeButtonClick(view: View) {
