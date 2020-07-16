@@ -2,13 +2,18 @@
 
 Android RecyclerView Sample
 
+## function
+- Click   
+- Add   
+- Delete
+
 
 ### Button Click
 - Show dialog, add on positiveButtonClick, cancel on negativeButtonClick
 - Reference LongClick gif
 
 ### RecyclerView Click
-- show Toast Message(RecyclerView Item Information)
+- Show Toast Message(RecyclerView Item Information)
 - ![Alt text](https://github.com/pyg1007/RecyclerView-Sample/blob/master/RecyclerViewClick.gif)
 
 
