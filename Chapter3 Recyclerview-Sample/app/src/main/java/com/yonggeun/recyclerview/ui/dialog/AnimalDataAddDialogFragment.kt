@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -55,6 +56,13 @@ class AnimalDataAddDialogFragment : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.dialog = this@AnimalDataAddDialogFragment
+
+        val layoutParam = WindowManager.LayoutParams().apply {
+            flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND
+            dimAmount = 0.8f
+        }
+
+        dialog?.window?.attributes = layoutParam
 
         selectionSpinner()
     }
