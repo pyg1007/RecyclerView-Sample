@@ -1,9 +1,6 @@
-package com.yonggeun.recyclerview
+package com.yonggeun.recyclerview.ui.activity
 
-import android.app.Dialog
-import android.graphics.Point
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
@@ -12,17 +9,16 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.yonggeun.recyclerview.R
 import com.yonggeun.recyclerview.adapter.AnimalAdapter
 import com.yonggeun.recyclerview.data.Animal
 import com.yonggeun.recyclerview.data.AnimalRepository
 import com.yonggeun.recyclerview.data.AnimalViewModel
 import com.yonggeun.recyclerview.data.AnimalViewModelFactory
 import com.yonggeun.recyclerview.databinding.ActivityMainBinding
-import com.yonggeun.recyclerview.dialog.AnimalDataAddDialog
-import kotlinx.android.synthetic.main.activity_main.*
+import com.yonggeun.recyclerview.ui.dialog.AnimalDataAddDialogFragment
 
 class MainActivity : AppCompatActivity(), AnimalAdapter.ItemClickListener {
 
@@ -99,7 +95,7 @@ class MainActivity : AppCompatActivity(), AnimalAdapter.ItemClickListener {
     }
 
     private fun deleteDialog(position: Int) {
-        val dialog: AlertDialog? = this@MainActivity.let {
+        val dialog: AlertDialog = this@MainActivity.let {
             val builder: AlertDialog.Builder = AlertDialog.Builder(it)
             builder.apply {
                 this.setMessage("${position+1}번째 내용을 삭제하시겠습니까?")
@@ -115,37 +111,19 @@ class MainActivity : AppCompatActivity(), AnimalAdapter.ItemClickListener {
             }
             builder.create()
         }
-        dialog?.show()
+        dialog.show()
     }
 
     private fun addDialog() {
-        val animalDataAddDialog =
-            AnimalDataAddDialog(this, object : AnimalDataAddDialog.OnClickListener {
-                override fun positiveButtonClick(view: View, animal: Animal) {
-                    // LiveData setValue
-                    viewModel.add(animal)
-                }
+        val animalDataAddDialog = AnimalDataAddDialogFragment.getInstance(object : AnimalDataAddDialogFragment.OnClickEvent{
+            override fun positiveButtonClick(animal: Animal) {
+                viewModel.add(animal)
+            }
 
-                override fun negativeButtonClick(view: View) {
-                    Toast.makeText(this@MainActivity, "취소하셨습니다.", Toast.LENGTH_SHORT).show()
-                }
-            })
-        animalDataAddDialog.show()
-        dialogResize(animalDataAddDialog)
+            override fun negativeButtonClick() {
+                Toast.makeText(this@MainActivity, "취소하셨습니다.", Toast.LENGTH_SHORT).show()
+            }
+        })
+        animalDataAddDialog.show(supportFragmentManager, "Add")
     }
-
-    private fun dialogResize(dialog: Dialog) {
-        val display = windowManager.defaultDisplay
-        val size = Point()
-
-        display.getSize(size)
-
-        val window = dialog.window
-
-        val x = (size.x * 0.95f).toInt()
-        val y = (size.y * 0.5f).toInt()
-
-        window?.setLayout(x, y)
-    }
-
 }
