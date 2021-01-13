@@ -3,10 +3,11 @@ package com.weather.recyclerview.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.weather.recyclerview.R
 import com.weather.recyclerview.data.Animal
-import kotlinx.android.synthetic.main.catlistdata.view.*
 
 class AnimalAdapter(
     private var animalsData: MutableList<Animal>,
@@ -19,10 +20,11 @@ class AnimalAdapter(
     }
 
     inner class CatViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
         fun bind(animalsData: Animal) {
-            itemView.Type.setImageResource(R.mipmap.cat)
-            itemView.AnimalName.text = animalsData.name
-            itemView.PhoneNumber.text = animalsData.phoneNumber
+            itemView.findViewById<ImageView>(R.id.Type).setImageResource(R.mipmap.cat)
+            itemView.findViewById<TextView>(R.id.AnimalName).text = animalsData.name
+            itemView.findViewById<TextView>(R.id.PhoneNumber).text = animalsData.phoneNumber
 
             itemView.setOnClickListener {
                 listener.onItemClick(it, adapterPosition)
@@ -37,9 +39,9 @@ class AnimalAdapter(
 
     inner class DogViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(animalsData: Animal) {
-            itemView.Type.setImageResource(R.mipmap.dog)
-            itemView.AnimalName.text = animalsData.name
-            itemView.PhoneNumber.text = animalsData.phoneNumber
+            itemView.findViewById<ImageView>(R.id.Type).setImageResource(R.mipmap.dog)
+            itemView.findViewById<TextView>(R.id.AnimalName).text = animalsData.name
+            itemView.findViewById<TextView>(R.id.PhoneNumber).text = animalsData.phoneNumber
 
             itemView.setOnClickListener {
                 listener.onItemClick(it, adapterPosition)

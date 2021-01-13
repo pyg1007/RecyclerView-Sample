@@ -1,19 +1,15 @@
-package com.yonggeun.recyclerview.ui.dialog
+package com.weather.recyclerview.ui.dialog
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Toast
-import androidx.databinding.DataBindingUtil
+import android.widget.*
 import androidx.fragment.app.DialogFragment
-import com.yonggeun.recyclerview.R
-import com.yonggeun.recyclerview.data.Animal
-import com.yonggeun.recyclerview.databinding.DialogAnimalAddBinding
-import com.yonggeun.recyclerview.util.dialogFragmentResize
+import com.weather.recyclerview.R
+import com.weather.recyclerview.data.Animal
+import com.weather.recyclerview.util.dialogFragmentResize
 
 /**
  * RecyclerView
@@ -22,12 +18,14 @@ import com.yonggeun.recyclerview.util.dialogFragmentResize
  * Created On 2021-01-13.
  * Description:
  */
-
 class AnimalDataAddDialogFragment : DialogFragment() {
 
-    private val binding get() = _binding!!
-    private var _binding: DialogAnimalAddBinding? = null
+    private val fragmentView get() = _fragmentView
+    private var _fragmentView: View? = null
     private var type = "Cat"
+    private lateinit var name: EditText
+    private lateinit var phoneNum: EditText
+    private lateinit var spinner: Spinner
 
     interface OnClickEvent {
         fun positiveButtonClick(animal: Animal)
@@ -46,23 +44,22 @@ class AnimalDataAddDialogFragment : DialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        _binding = DataBindingUtil.inflate(inflater, R.layout.dialog_animal_add, container, false)
-        return binding.root
+    ): View? {
+        _fragmentView = inflater.inflate(R.layout.dialog_animal_add, container, false)
+        return fragmentView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.dialog = this@AnimalDataAddDialogFragment
         val layoutParam = WindowManager.LayoutParams().apply {
             flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND
             dimAmount = 0.8f
         }
-
         dialog?.window?.attributes = layoutParam
 
-        selectionSpinner()
+        setSpinner()
+        initUI()
     }
 
     override fun onResume() {
@@ -70,16 +67,32 @@ class AnimalDataAddDialogFragment : DialogFragment() {
         requireContext().dialogFragmentResize(this@AnimalDataAddDialogFragment, 0.95f, 0.5f)
     }
 
-    fun positive() {
-        val name = binding.EditName.text.toString()
-        val phoneNum = binding.EditPhoneNumber.text.toString()
+    private fun initUI() {
+        fragmentView?.let {
+            name = it.findViewById(R.id.EditName)
+            phoneNum = it.findViewById(R.id.EditPhoneNumber)
+            spinner = it.findViewById(R.id.KindSelect)
+        }
+        setButton()
+    }
 
-        if (name.isNotEmpty() && phoneNum.isNotEmpty()) {
-            val animal = Animal(
-                type,
-                binding.EditName.text.toString(),
-                binding.EditPhoneNumber.text.toString()
-            )
+    private fun setButton() {
+        fragmentView?.let {
+            it.findViewById<Button>(R.id.Cancel).setOnClickListener {
+                negative()
+            }
+            it.findViewById<Button>(R.id.Add).setOnClickListener {
+                positive()
+            }
+        }
+    }
+
+    private fun positive() {
+        val strName = name.text.toString()
+        val strPhoneNum = phoneNum.text.toString()
+
+        if (strName.isNotEmpty() && strPhoneNum.isNotEmpty()) {
+            val animal = Animal(type, strName, strPhoneNum)
             clickListener?.positiveButtonClick(animal)
             exit()
         } else {
@@ -87,7 +100,7 @@ class AnimalDataAddDialogFragment : DialogFragment() {
         }
     }
 
-    fun negative() {
+    private fun negative() {
         clickListener?.negativeButtonClick()
         exit()
     }
@@ -98,17 +111,18 @@ class AnimalDataAddDialogFragment : DialogFragment() {
             fragment.dismiss()
     }
 
-    private fun selectionSpinner() {
+    private fun setSpinner() {
+        val spinner = fragmentView?.findViewById<Spinner>(R.id.KindSelect)
         ArrayAdapter.createFromResource(
             requireContext(),
             R.array.AnimalType,
             android.R.layout.simple_spinner_item
         ).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            binding.KindSelect.adapter = adapter
+            spinner?.adapter = adapter
         }
 
-        binding.KindSelect.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        spinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
 
             }
@@ -119,13 +133,10 @@ class AnimalDataAddDialogFragment : DialogFragment() {
                 position: Int,
                 id: Long
             ) {
-                type = binding.KindSelect.selectedItem.toString()
+                type = spinner?.selectedItem.toString()
             }
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
+
 }
