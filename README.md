@@ -34,5 +34,5 @@ Use Databinding, MVVM
 
 # Development environment
   OS : Windows10 Pro   
-  IDE : Android Studio 4.0   
+  IDE : Android Studio 4.1.1   
   Language : Kotlin   
