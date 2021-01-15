@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity(), AnimalAdapter.ItemClickListener {
     }
 
     private fun addData() {
-        findViewById<Button>(R.id.Add).setOnClickListener {
+        findViewById<Button>(R.id.add).setOnClickListener {
             addDialog()
         }
     }

@@ -7,7 +7,7 @@
     tools:context=".ui.activity.MainActivity">
 
     <Button
-        android:id="@+id/Add"
+        android:id="@+id/add"
         android:text="@string/AnimalDataAdd"
         android:textSize="16sp"
         app:layout_constraintHeight_percent="0.1"
@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="15sp"
-        app:layout_constraintTop_toBottomOf="@id/Add"/>
+        app:layout_constraintTop_toBottomOf="@id/add"/>
 
 
 

@@ -69,19 +69,19 @@ class AnimalDataAddDialogFragment : DialogFragment() {
 
     private fun initUI() {
         fragmentView?.let {
-            name = it.findViewById(R.id.EditName)
-            phoneNum = it.findViewById(R.id.EditPhoneNumber)
-            spinner = it.findViewById(R.id.KindSelect)
+            name = it.findViewById(R.id.editName)
+            phoneNum = it.findViewById(R.id.editPhoneNumber)
+            spinner = it.findViewById(R.id.kindSelect)
         }
         setButton()
     }
 
     private fun setButton() {
         fragmentView?.let {
-            it.findViewById<Button>(R.id.Cancel).setOnClickListener {
+            it.findViewById<Button>(R.id.cancel).setOnClickListener {
                 negative()
             }
-            it.findViewById<Button>(R.id.Add).setOnClickListener {
+            it.findViewById<Button>(R.id.add).setOnClickListener {
                 positive()
             }
         }
@@ -112,7 +112,7 @@ class AnimalDataAddDialogFragment : DialogFragment() {
     }
 
     private fun setSpinner() {
-        val spinner = fragmentView?.findViewById<Spinner>(R.id.KindSelect)
+        val spinner = fragmentView?.findViewById<Spinner>(R.id.kindSelect)
         ArrayAdapter.createFromResource(
             requireContext(),
             R.array.AnimalType,

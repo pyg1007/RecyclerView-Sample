@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.weather.recyclerview.R
 import com.weather.recyclerview.data.Animal
@@ -22,15 +23,15 @@ class AnimalAdapter(
     inner class CatViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(animalsData: Animal) {
-            itemView.findViewById<ImageView>(R.id.Type).setImageResource(R.mipmap.cat)
-            itemView.findViewById<TextView>(R.id.AnimalName).text = animalsData.name
-            itemView.findViewById<TextView>(R.id.PhoneNumber).text = animalsData.phoneNumber
+            itemView.findViewById<ImageView>(R.id.type).setImageResource(R.mipmap.cat)
+            itemView.findViewById<TextView>(R.id.animalName).text = animalsData.name
+            itemView.findViewById<TextView>(R.id.phoneNumber).text = animalsData.phoneNumber
 
-            itemView.setOnClickListener {
+            itemView.findViewById<ConstraintLayout>(R.id.parentView).setOnClickListener {
                 listener.onItemClick(it, adapterPosition)
             }
 
-            itemView.setOnLongClickListener {
+            itemView.findViewById<ConstraintLayout>(R.id.parentView).setOnLongClickListener {
                 listener.onItemLongClick(it, adapterPosition)
                 true
             }
@@ -39,15 +40,15 @@ class AnimalAdapter(
 
     inner class DogViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(animalsData: Animal) {
-            itemView.findViewById<ImageView>(R.id.Type).setImageResource(R.mipmap.dog)
-            itemView.findViewById<TextView>(R.id.AnimalName).text = animalsData.name
-            itemView.findViewById<TextView>(R.id.PhoneNumber).text = animalsData.phoneNumber
+            itemView.findViewById<ImageView>(R.id.type).setImageResource(R.mipmap.dog)
+            itemView.findViewById<TextView>(R.id.animalName).text = animalsData.name
+            itemView.findViewById<TextView>(R.id.phoneNumber).text = animalsData.phoneNumber
 
-            itemView.setOnClickListener {
+            itemView.findViewById<ConstraintLayout>(R.id.parentView).setOnClickListener {
                 listener.onItemClick(it, adapterPosition)
             }
 
-            itemView.setOnLongClickListener {
+            itemView.findViewById<ConstraintLayout>(R.id.parentView).setOnLongClickListener {
                 listener.onItemLongClick(it, adapterPosition)
                 true
             }
