@@ -81,7 +81,7 @@ class AnimalDataAddDialogFragment : DialogFragment() {
             clickListener?.positiveButtonClick(animal)
             exit()
         }else{
-            Toast.makeText(requireContext(), "아이디나 휴대폰번호를 확인해주세요.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "이름이나 휴대폰번호를 확인해주세요.", Toast.LENGTH_SHORT).show()
         }
     }
 

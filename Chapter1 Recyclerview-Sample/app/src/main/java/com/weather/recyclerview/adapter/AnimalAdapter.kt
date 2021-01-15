@@ -77,11 +77,11 @@ class AnimalAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         //BindViewHolder
         if (getItemViewType(position) == 0) {
-            val catHolder = holder as CatViewHolder
-            catHolder.bind(animalsData = animalsData[position])
+            if(holder is CatViewHolder)
+                holder.bind(animalsData = animalsData[position])
         } else {
-            val dogHolder = holder as DogViewHolder
-            dogHolder.bind(animalsData = animalsData[position])
+            if (holder is DogViewHolder)
+                holder.bind(animalsData = animalsData[position])
         }
     }
 
