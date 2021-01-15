@@ -1,7 +1,5 @@
 package com.yonggeun.recyclerview.ui.activity
 
-import android.app.Dialog
-import android.graphics.Point
 import android.os.Bundle
 import android.view.Gravity
 import android.view.MenuItem
@@ -18,7 +16,6 @@ import com.yonggeun.recyclerview.adapter.AnimalAdapter
 import com.yonggeun.recyclerview.data.Animal
 import com.yonggeun.recyclerview.databinding.ActivityMainBinding
 import com.yonggeun.recyclerview.ui.dialog.AnimalDataAddDialogFragment
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), AnimalAdapter.ItemClickListener {
 
@@ -41,7 +38,7 @@ class MainActivity : AppCompatActivity(), AnimalAdapter.ItemClickListener {
     }
 
     private fun addData() {
-        mainBinding.Add.setOnClickListener {
+        mainBinding.add.setOnClickListener {
             addDialog()
         }
     }
@@ -49,7 +46,7 @@ class MainActivity : AppCompatActivity(), AnimalAdapter.ItemClickListener {
     private fun initRecyclerView() {
         animalAdapter = AnimalAdapter(animals, this)
         val layoutManager = LinearLayoutManager(this)
-        mainBinding.AnimalRecyclerView.apply {
+        mainBinding.animalRecyclerView.apply {
             this.setHasFixedSize(true)
             this.adapter = animalAdapter
             this.layoutManager = layoutManager
@@ -85,7 +82,7 @@ class MainActivity : AppCompatActivity(), AnimalAdapter.ItemClickListener {
         popupMenu.setOnMenuItemClickListener(object : PopupMenu.OnMenuItemClickListener {
             override fun onMenuItemClick(item: MenuItem?): Boolean {
                 when (item!!.itemId) {
-                    R.id.AnimalDataDelete -> {
+                    R.id.animalDataDelete -> {
                         deleteDialog(position)
                         return true
                     }
