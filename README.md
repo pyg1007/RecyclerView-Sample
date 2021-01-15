@@ -32,6 +32,9 @@ Use DataBinding, Not use MVVM
 ## Chapter3 RecyclerView-Sample
 Use Databinding, MVVM
 
+## Chapter3 RecyclerView-Sample
+Use Databinding, MVVM, ListAdapter
+
 # Development environment
   OS : Windows10 Pro   
   IDE : Android Studio 4.1.1   
