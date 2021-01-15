@@ -6,15 +6,15 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.yonggeun.recyclerview.MyApplication
 import com.yonggeun.recyclerview.R
 import com.yonggeun.recyclerview.adapter.AnimalAdapter
 import com.yonggeun.recyclerview.data.Animal
-import com.yonggeun.recyclerview.data.AnimalRepository
 import com.yonggeun.recyclerview.data.AnimalViewModel
 import com.yonggeun.recyclerview.data.AnimalViewModelFactory
 import com.yonggeun.recyclerview.databinding.ActivityMainBinding
@@ -25,16 +25,11 @@ class MainActivity : AppCompatActivity(), AnimalAdapter.ItemClickListener {
     private lateinit var animalAdapter: AnimalAdapter
     private var animalItems: MutableList<Animal> = mutableListOf()
     private lateinit var mainBinding: ActivityMainBinding
-    private lateinit var viewModel: AnimalViewModel
-    private lateinit var factory: AnimalViewModelFactory
+    private val viewModel by viewModels<AnimalViewModel> { AnimalViewModelFactory((application as MyApplication).repository) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-
-        val repository = AnimalRepository()
-        factory = AnimalViewModelFactory(repository)
-        viewModel = ViewModelProvider(this, factory).get(AnimalViewModel::class.java)
 
         // MainActivity xml
         // variable name is viewModel
@@ -47,12 +42,13 @@ class MainActivity : AppCompatActivity(), AnimalAdapter.ItemClickListener {
         initRecyclerView()
         addData()
 
-        // value has viewModel
-        animalItems = viewModel.animals.value!!
+        viewModel.animals.observe(this, {
+            animalItems = it
+        })
     }
 
     private fun addData() {
-        mainBinding.Add.setOnClickListener {
+        mainBinding.add.setOnClickListener {
             addDialog()
         }
     }
@@ -61,7 +57,7 @@ class MainActivity : AppCompatActivity(), AnimalAdapter.ItemClickListener {
         animalAdapter = AnimalAdapter(animalItems, this)
         val layoutManager = LinearLayoutManager(this)
 
-        mainBinding.AnimalRecyclerView.apply {
+        mainBinding.animalRecyclerView.apply {
             this.setHasFixedSize(true)
             this.adapter = animalAdapter
             this.layoutManager = layoutManager
@@ -83,7 +79,7 @@ class MainActivity : AppCompatActivity(), AnimalAdapter.ItemClickListener {
         popupMenu.setOnMenuItemClickListener(object : PopupMenu.OnMenuItemClickListener {
             override fun onMenuItemClick(item: MenuItem?): Boolean {
                 when (item!!.itemId) {
-                    R.id.AnimalDataDelete -> {
+                    R.id.animalDataDelete -> {
                         deleteDialog(position)
                         return true
                     }
@@ -98,7 +94,7 @@ class MainActivity : AppCompatActivity(), AnimalAdapter.ItemClickListener {
         val dialog: AlertDialog = this@MainActivity.let {
             val builder: AlertDialog.Builder = AlertDialog.Builder(it)
             builder.apply {
-                this.setMessage("${position+1}번째 내용을 삭제하시겠습니까?")
+                this.setMessage("${position + 1}번째 내용을 삭제하시겠습니까?")
                 this.setCancelable(false)
                 this.setPositiveButton("삭제") { dialog, _ ->
                     // LiveData setValue
@@ -115,7 +111,8 @@ class MainActivity : AppCompatActivity(), AnimalAdapter.ItemClickListener {
     }
 
     private fun addDialog() {
-        val animalDataAddDialog = AnimalDataAddDialogFragment.getInstance(object : AnimalDataAddDialogFragment.OnClickEvent{
+        val animalDataAddDialog = AnimalDataAddDialogFragment.getInstance(object :
+            AnimalDataAddDialogFragment.OnClickEvent {
             override fun positiveButtonClick(animal: Animal) {
                 viewModel.add(animal)
             }

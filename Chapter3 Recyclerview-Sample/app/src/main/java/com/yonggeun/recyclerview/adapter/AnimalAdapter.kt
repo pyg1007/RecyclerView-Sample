@@ -16,7 +16,6 @@ import com.yonggeun.recyclerview.databinding.DoglistdataBinding
 // value = item
 @BindingAdapter("item")
 fun bindItem(recyclerView: RecyclerView, items: MutableList<Animal>){
-    Log.e("TAG: ", "TAG")
     recyclerView.adapter?.run {
         if (this is AnimalAdapter){
             this.update(items)
@@ -39,13 +38,13 @@ class AnimalAdapter(
 
         fun bind(animalsData: Animal) {
 
-            binding.setVariable(BR.CatData, animalsData)
+            binding.catData = animalsData
 
-            itemView.setOnClickListener {
+            binding.parentView.setOnClickListener {
                 listener.onItemClick(it, adapterPosition)
             }
 
-            itemView.setOnLongClickListener {
+            binding.parentView.setOnLongClickListener {
                 listener.onItemLongClick(it, adapterPosition)
                 true
             }
@@ -55,13 +54,13 @@ class AnimalAdapter(
     inner class DogViewHolder(private val binding: DoglistdataBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(animalsData: Animal) {
 
-            binding.setVariable(BR.DogData, animalsData)
+            binding.dogData = animalsData
 
-            itemView.setOnClickListener {
+            binding.parentView.setOnClickListener {
                 listener.onItemClick(it, adapterPosition)
             }
 
-            itemView.setOnLongClickListener {
+            binding.parentView.setOnLongClickListener {
                 listener.onItemLongClick(it, adapterPosition)
                 true
             }

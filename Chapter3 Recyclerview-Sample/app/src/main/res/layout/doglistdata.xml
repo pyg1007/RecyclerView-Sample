@@ -6,18 +6,19 @@
     <data>
 
         <variable
-            name="DogData"
+            name="dogData"
             type="com.yonggeun.recyclerview.data.Animal" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/parentView"
         android:layout_width="match_parent"
         android:layout_height="60sp"
         android:layout_marginBottom="5dp">
 
         <ImageView
-            android:id="@+id/Type"
+            android:id="@+id/type"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:scaleType="fitCenter"
@@ -28,26 +29,26 @@
             app:layout_constraintWidth_percent="0.2" />
 
         <TextView
-            android:id="@+id/AnimalName"
+            android:id="@+id/animalName"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:gravity="center_horizontal|center_vertical"
             android:textSize="16sp"
-            android:text="@{DogData.name}"
+            android:text="@{dogData.name}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/Type"
+            app:layout_constraintLeft_toRightOf="@id/type"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_percent="0.3" />
 
         <TextView
-            android:id="@+id/PhoneNumber"
+            android:id="@+id/phoneNumber"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:gravity="center_horizontal|center_vertical"
             android:textSize="16sp"
-            android:text="@{DogData.phoneNumber}"
+            android:text="@{dogData.phoneNumber}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/AnimalName"
+            app:layout_constraintLeft_toRightOf="@id/animalName"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_percent="0.5" />
 

@@ -69,14 +69,14 @@ class AnimalDataAddDialogFragment : DialogFragment() {
 
     fun positive() {
 
-        val name = binding.EditName.text.toString()
-        val phoneNum = binding.EditPhoneNumber.text.toString()
+        val name = binding.editName.text.toString()
+        val phoneNum = binding.editPhoneNumber.text.toString()
 
         if (name.isNotEmpty() && phoneNum.isNotEmpty()) {
             val animal = Animal(
                 type,
-                binding.EditName.text.toString(),
-                binding.EditPhoneNumber.text.toString()
+                name,
+                phoneNum
             )
             clickListener?.positiveButtonClick(animal)
             exit()
@@ -103,17 +103,17 @@ class AnimalDataAddDialogFragment : DialogFragment() {
             android.R.layout.simple_spinner_item
         ).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            binding.KindSelect.adapter = adapter
+            binding.kindSelect.adapter = adapter
         }
 
-        binding.KindSelect.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        binding.kindSelect.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
                 position: Int,
                 id: Long
             ) {
-                type = binding.KindSelect.selectedItem.toString()
+                type = binding.kindSelect.selectedItem.toString()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
