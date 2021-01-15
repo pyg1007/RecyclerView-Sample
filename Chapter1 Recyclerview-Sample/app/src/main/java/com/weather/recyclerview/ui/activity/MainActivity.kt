@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity(), AnimalAdapter.ItemClickListener {
         popupMenu.setOnMenuItemClickListener(object : PopupMenu.OnMenuItemClickListener {
             override fun onMenuItemClick(item: MenuItem?): Boolean {
                 when (item!!.itemId) {
-                    R.id.AnimalDataDelete -> {
+                    R.id.animalDataDelete -> {
                         deleteDialog(position)
                         return true
                     }
